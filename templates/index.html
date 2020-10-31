@@ -5,6 +5,8 @@
         width: 40px;
         height: 40px;
         appearance: none;
+        padding-left: 14px;
+        font-size: 16px;
     }
     .column_2,.column_5 {
         border-bottom: solid 2px;
@@ -15,7 +17,7 @@
 </style>
 {% for i in range(9) %}
     <div>
-    {% for j in range(9) %}<select class="cell column_{{i}} row_{{j}}">
+    {% for j in range(9) %}<select class="cell cell_{{i}}{{j}} column_{{i}} row_{{j}}">
         <option value="0"></option>
         <option value="1">1</option>
         <option value="2">2</option>
