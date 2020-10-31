@@ -17,17 +17,18 @@
 </style>
 {% for i in range(9) %}
     <div>
+
     {% for j in range(9) %}<select class="cell cell_{{i}}{{j}} column_{{i}} row_{{j}}">
-        <option value="0"></option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
+        <option value="0" {% if pazzle[i][j] == 0 %}selected{% endif %}></option>
+        <option value="1" {% if pazzle[i][j] == 1 %}selected{% endif %}>1</option>
+        <option value="2" {% if pazzle[i][j] == 2 %}selected{% endif %}>2</option>
+        <option value="3" {% if pazzle[i][j] == 3 %}selected{% endif %}>3</option>
+        <option value="4" {% if pazzle[i][j] == 4 %}selected{% endif %}>4</option>
+        <option value="5" {% if pazzle[i][j] == 5 %}selected{% endif %}>5</option>
+        <option value="6" {% if pazzle[i][j] == 6 %}selected{% endif %}>6</option>
+        <option value="7" {% if pazzle[i][j] == 7 %}selected{% endif %}>7</option>
+        <option value="8" {% if pazzle[i][j] == 8 %}selected{% endif %}>8</option>
+        <option value="9" {% if pazzle[i][j] == 9 %}selected{% endif %}>9</option>
     </select>{% endfor %}
     </div>
 {% endfor %}
