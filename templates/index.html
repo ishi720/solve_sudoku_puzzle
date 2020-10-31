@@ -1,4 +1,32 @@
 {% extends "layout.html" %}
 {% block content %}
-<h3>{{ message }}</h3>
+<style type="text/css">
+    .cell {
+        width: 40px;
+        height: 40px;
+        appearance: none;
+    }
+    .column_2,.column_5 {
+        border-bottom: solid 2px;
+    }
+    .row_2,.row_5 {
+        border-right: solid 2px;
+    }
+</style>
+{% for i in range(9) %}
+    <div>
+    {% for j in range(9) %}<select class="cell column_{{i}} row_{{j}}">
+        <option value="0"></option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+    </select>{% endfor %}
+    </div>
+{% endfor %}
 {% endblock %}
