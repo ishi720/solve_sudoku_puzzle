@@ -4,7 +4,6 @@
  */
 function pazzeleDataGet() {
     var pazzeleData = [];
-
     for (var i = 0; i <= 8; i++) {
         pazzeleData[i] = [];
         for (var j = 0; j <= 8; j++) {
@@ -14,9 +13,20 @@ function pazzeleDataGet() {
     return pazzeleData;
 }
 
+/*
+ * 特定できた箇所に数値をセットする
+ * @param {Array} pazzeleData セットするデータ
+ */
+function pazzeleDataSet(pazzeleData) {
+    for (var i = 0; i <= 8; i++) {
+        for (var j = 0; j <= 8; j++) {
+            document.getElementsByClassName('cell_'+i+j)[0].value = pazzeleData[i][j];
+        }
+    }
+}
+
 function puzzleSolver() {
 	var puzzle = pazzeleDataGet();
-
     $.ajax({
         type: "POST",
         url: '/api/',
@@ -25,6 +35,6 @@ function puzzleSolver() {
         },
         dataType: 'json',
     }).done(function(res) {
-        console.log(res);
+        pazzeleDataSet(res.afterPuzzle);
     });
 }

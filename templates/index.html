@@ -30,6 +30,10 @@
         <option value="8" {% if puzzle[i][j] == 8 %}selected{% endif %}>8</option>
         <option value="9" {% if puzzle[i][j] == 9 %}selected{% endif %}>9</option>
     </select>{% endfor %}
+
     </div>
 {% endfor %}
+
+<button onclick="puzzleSolver()">パズルを解く</button>
+
 {% endblock %}
