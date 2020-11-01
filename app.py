@@ -16,70 +16,40 @@ class SudokuPuzzle:
                     checkList = [1,2,3,4,5,6,7,8,9]
 
                     """横のチェック"""
-                    if self.puzzle[i][0] in checkList:
-                        checkList.remove(self.puzzle[i][0])
-                    if self.puzzle[i][1] in checkList:
-                        checkList.remove(self.puzzle[i][1])
-                    if self.puzzle[i][2] in checkList:
-                        checkList.remove(self.puzzle[i][2])
-                    if self.puzzle[i][3] in checkList:
-                        checkList.remove(self.puzzle[i][3])
-                    if self.puzzle[i][4] in checkList:
-                        checkList.remove(self.puzzle[i][4])
-                    if self.puzzle[i][5] in checkList:
-                        checkList.remove(self.puzzle[i][5])
-                    if self.puzzle[i][6] in checkList:
-                        checkList.remove(self.puzzle[i][6])
-                    if self.puzzle[i][7] in checkList:
-                        checkList.remove(self.puzzle[i][7])
-                    if self.puzzle[i][8] in checkList:
-                        checkList.remove(self.puzzle[i][8])
+                    checkList = self.checkColumn(checkList, i)
 
                     """縦のチェック"""
-                    if self.puzzle[0][j] in checkList:
-                        checkList.remove(self.puzzle[0][j])
-                    if self.puzzle[1][j] in checkList:
-                        checkList.remove(self.puzzle[1][j])
-                    if self.puzzle[2][j] in checkList:
-                        checkList.remove(self.puzzle[2][j])
-                    if self.puzzle[3][j] in checkList:
-                        checkList.remove(self.puzzle[3][j])
-                    if self.puzzle[4][j] in checkList:
-                        checkList.remove(self.puzzle[4][j])
-                    if self.puzzle[5][j] in checkList:
-                        checkList.remove(self.puzzle[5][j])
-                    if self.puzzle[6][j] in checkList:
-                        checkList.remove(self.puzzle[6][j])
-                    if self.puzzle[7][j] in checkList:
-                        checkList.remove(self.puzzle[7][j])
-                    if self.puzzle[8][j] in checkList:
-                        checkList.remove(self.puzzle[8][j])
+                    checkList = self.checkRow(checkList, j)
 
-                    """9x9のチェック"""
-                    _i = (i // 3) * 3
-                    _j = (j // 3) * 3
-                    if self.puzzle[_i][_j] in checkList:
-                        checkList.remove(self.puzzle[_i][_j])
-                    if self.puzzle[_i+1][_j] in checkList:
-                        checkList.remove(self.puzzle[_i+1][_j])
-                    if self.puzzle[_i+2][_j] in checkList:
-                        checkList.remove(self.puzzle[_i+2][_j])
-                    if self.puzzle[_i][_j+1] in checkList:
-                        checkList.remove(self.puzzle[_i][_j+1])
-                    if self.puzzle[_i+1][_j+1] in checkList:
-                        checkList.remove(self.puzzle[_i+1][_j+1])
-                    if self.puzzle[_i+2][_j+1] in checkList:
-                        checkList.remove(self.puzzle[_i+2][_j+1])
-                    if self.puzzle[_i][_j+2] in checkList:
-                        checkList.remove(self.puzzle[_i][_j+2])
-                    if self.puzzle[_i+1][_j+2] in checkList:
-                        checkList.remove(self.puzzle[_i+1][_j+2])
-                    if self.puzzle[_i+2][_j+2] in checkList:
-                        checkList.remove(self.puzzle[_i+2][_j+2])
+                    """3x3のチェック"""
+                    checkList = self.checkArea(checkList, i, j)
 
                     if len(checkList) == 1:
                         self.puzzle[i][j] = checkList[0]
 
+    def checkColumn(self, checkList, column):
+        """横のチェック"""
+        for row in range(9):
+            if self.puzzle[column][row] in checkList:
+                checkList.remove(self.puzzle[column][row])
+        return checkList
+
+    def checkRow(self, checkList, row):
+        """縦のチェック"""
+        for column in range(9):
+            if self.puzzle[column][row] in checkList:
+                checkList.remove(self.puzzle[column][row])
+        return checkList
+
+    def checkArea(self, checkList, column, row):
+        """3x3のエリアのチェック"""
+        _column = (column // 3) * 3
+        _row = (row // 3) * 3
+        for i in range(3):
+            for j in range(3):
+                if self.puzzle[_column+i][_row+j] in checkList:
+                    checkList.remove(self.puzzle[_column+i][_row+j])
+        return checkList
 
     def progress(self):
         """進捗率の計算"""
