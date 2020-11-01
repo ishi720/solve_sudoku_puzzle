@@ -1,5 +1,6 @@
-from flask import Flask, render_template, jsonify
-import math
+from flask import Flask, render_template, request, jsonify
+import math, json
+
 app = Flask(__name__)
 
 class SudokuPuzzle:
@@ -107,19 +108,9 @@ def hello():
 
     return render_template('index.html', title='test', puzzle=puzzle)
 
-@app.route('/api/')
+@app.route('/api/', methods=['POST'])
 def index():
-    puzzle = [
-        [0,5,9,0,3,0,7,2,0],
-        [1,0,7,0,4,0,3,0,8],
-        [0,6,0,2,0,5,0,4,0],
-        [3,0,2,1,0,8,5,0,7],
-        [0,1,0,7,0,6,0,3,0],
-        [5,0,0,0,0,0,0,0,9],
-        [0,0,4,0,0,0,6,0,0],
-        [0,3,0,0,1,0,0,7,0],
-        [7,0,1,5,6,4,2,0,3]
-    ]
+    puzzle = json.loads(request.form['puzzle'])
     puzzleObj = SudokuPuzzle(puzzle)
     puzzleObj.solver()
     percentage,fraction = puzzleObj.progress()
@@ -129,6 +120,8 @@ def index():
         'fraction': fraction,
         'afterPuzzle': puzzleObj.puzzle
     })
+
+    
 
 if __name__ == "__main__":
     app.run(debug=True)
