@@ -14,7 +14,7 @@ class SudokuPuzzle:
             for j in range(9):
                 if self.puzzle[i][j] == 0:
                     checkList = [1,2,3,4,5,6,7,8,9]
-
+                    
                     """横のチェック"""
                     checkList = self.checkColumn(checkList, i)
 
@@ -24,8 +24,50 @@ class SudokuPuzzle:
                     """3x3のチェック"""
                     checkList = self.checkArea(checkList, i, j)
 
+                    if self.checkNearLine(checkList, i, j):
+                        self.puzzle[i][j] = self.checkNearLine(checkList, i, j)
+
                     if len(checkList) == 1:
                         self.puzzle[i][j] = checkList[0]
+
+    def checkNearLine(self, checkList ,column, row):
+
+        nearColumnList = []
+        for i in range(3):
+            if column // 3 * 3 + i != column: 
+                nearColumnList.append(column // 3 * 3 + i)
+        nearColumn1,nearColumn2 = nearColumnList
+
+        nearRowList = []
+        for i in range(3):
+            if row // 3 * 3 + i != row: 
+                nearRowList.append(row // 3 * 3 + i)
+        nearRow1,nearRow2 = nearRowList
+
+        work = []
+        for x in range(9):
+            work.append(self.puzzle[x][nearRow1])
+        checkList =  set(checkList) & set(work)
+
+        work = []
+        for x in range(9):
+            work.append(self.puzzle[x][nearRow2])
+        checkList =  set(checkList) & set(work)
+
+        work = []
+        for x in range(9):
+            work.append(self.puzzle[nearColumn1][x])
+        checkList =  set(checkList) & set(work)
+
+        work = []
+        for x in range(9):
+            work.append(self.puzzle[nearColumn2][x])
+        checkList =  set(checkList) & set(work)
+
+        if len(checkList) == 1:
+            return list(checkList)[0]
+        else:
+            return False
 
     def checkColumn(self, checkList, column):
         """横のチェック"""
@@ -64,17 +106,45 @@ class SudokuPuzzle:
 
 @app.route('/')
 def hello():
+
+    # 初級
+    # puzzle = [
+    #     [0,5,9,0,3,0,7,2,0],
+    #     [1,0,7,0,4,0,3,0,8],
+    #     [0,6,0,2,0,5,0,4,0],
+    #     [3,0,2,1,0,8,5,0,7],
+    #     [0,1,0,7,0,6,0,3,0],
+    #     [5,0,0,0,0,0,0,0,9],
+    #     [0,0,4,0,0,0,6,0,0],
+    #     [0,3,0,0,1,0,0,7,0],
+    #     [7,0,1,5,6,4,2,0,3]
+    # ]
+
+    # 中級
     puzzle = [
-        [0,5,9,0,3,0,7,2,0],
-        [1,0,7,0,4,0,3,0,8],
-        [0,6,0,2,0,5,0,4,0],
-        [3,0,2,1,0,8,5,0,7],
-        [0,1,0,7,0,6,0,3,0],
-        [5,0,0,0,0,0,0,0,9],
-        [0,0,4,0,0,0,6,0,0],
-        [0,3,0,0,1,0,0,7,0],
-        [7,0,1,5,6,4,2,0,3]
+        [8,0,0,0,0,0,0,0,3],
+        [0,0,0,0,4,0,0,0,0],
+        [5,0,0,1,9,6,0,0,7],
+        [9,0,6,2,0,4,3,0,1],
+        [0,7,0,0,0,0,0,6,0],
+        [1,0,8,3,0,7,9,0,4],
+        [3,0,0,4,7,2,0,0,9],
+        [0,0,0,0,5,0,0,0,0],
+        [2,0,0,0,0,0,0,0,6]
     ]
+
+    # 上級
+    # puzzle = [
+    #     [3,0,6,0,0,0,4,0,5],
+    #     [0,0,0,0,8,0,0,0,0],
+    #     [0,0,0,6,0,2,0,0,0],
+    #     [1,4,2,0,0,0,9,8,3],
+    #     [0,0,7,4,0,1,2,0,0],
+    #     [6,5,9,0,0,0,1,4,7],
+    #     [0,0,0,9,0,7,0,0,0],
+    #     [0,0,0,0,1,0,0,0,0],
+    #     [2,0,5,0,0,0,7,0,8]
+    # ]
 
     return render_template('index.html', title='test', puzzle=puzzle)
 
