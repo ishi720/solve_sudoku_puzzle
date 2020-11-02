@@ -146,7 +146,16 @@ def hello():
     #     [2,0,5,0,0,0,7,0,8]
     # ]
 
-    return render_template('index.html', title='test', puzzle=puzzle)
+    puzzleObj = SudokuPuzzle(puzzle)
+    percentage,fraction = puzzleObj.progress()
+
+    return render_template(
+        'index.html',
+        title='Solve Sudoku Puzzle',
+        puzzle=puzzle,
+        percentage= str(percentage) + '%',
+        fraction= "(" + str(fraction) + ")"
+    )
 
 @app.route('/api/', methods=['POST'])
 def index():
@@ -160,8 +169,6 @@ def index():
         'fraction': fraction,
         'afterPuzzle': puzzleObj.puzzle
     })
-
-    
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -17,12 +17,14 @@ function pazzeleDataGet() {
  * 特定できた箇所に数値をセットする
  * @param {Array} pazzeleData セットするデータ
  */
-function pazzeleDataSet(pazzeleData) {
+function pazzeleDataSet(pazzeleData,percentage,fraction) {
     for (var i = 0; i <= 8; i++) {
         for (var j = 0; j <= 8; j++) {
             document.getElementsByClassName('cell_'+i+j)[0].value = pazzeleData[i][j];
         }
     }
+    document.getElementsByClassName('percentage')[0].innerText = percentage + "%";
+    document.getElementsByClassName('fraction')[0].innerText = "(" + fraction + ")";
 }
 
 function puzzleSolver() {
@@ -35,6 +37,7 @@ function puzzleSolver() {
         },
         dataType: 'json',
     }).done(function(res) {
-        pazzeleDataSet(res.afterPuzzle);
+        console.log(res);
+        pazzeleDataSet(res.afterPuzzle,res.percentage,res.fraction);
     });
 }
