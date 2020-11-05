@@ -5,16 +5,28 @@ app = Flask(__name__)
 
 class SudokuPuzzle:
     puzzle = []
+    candidate = []
 
     def __init__(self, puzzle):
         self.puzzle = puzzle
+        self.candidate = [
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0],
+            [0,0,0,0,0,0,0,0,0]
+        ]
+
 
     def solver(self):
         for i in range(9):
             for j in range(9):
+                checkList = [1,2,3,4,5,6,7,8,9]
                 if self.puzzle[i][j] == 0:
-                    checkList = [1,2,3,4,5,6,7,8,9]
-                    
                     """横のチェック"""
                     checkList = self.checkColumn(checkList, i)
 
@@ -29,6 +41,11 @@ class SudokuPuzzle:
 
                     if len(checkList) == 1:
                         self.puzzle[i][j] = checkList[0]
+
+                    self.candidate[i][j] = checkList
+                else:
+                    self.candidate[i][j] = [self.puzzle[i][j]]
+
 
     def checkNearLine(self, checkList ,column, row):
 
@@ -167,7 +184,7 @@ def index():
     return jsonify({
         'percentage': percentage,
         'fraction': fraction,
-        'afterPuzzle': puzzleObj.puzzle
+        'afterPuzzle': puzzleObj.puzzle,
     })
 
 if __name__ == "__main__":
