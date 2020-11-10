@@ -17,7 +17,7 @@ class SudokuPuzzle:
             [0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0]
         ]
-
+        self.candidateCheck()
 
     def solver(self):
         for i in range(9):
@@ -36,14 +36,19 @@ class SudokuPuzzle:
                     if self.checkNearLine(checkList, i, j):
                         self.puzzle[i][j] = self.checkNearLine(checkList, i, j)
 
+                        self.rowCandidateRemove(i, self.puzzle[i][j])
+                        self.columnCandidateRemove(j, self.puzzle[i][j])
+                        self.areaCandidateRemove(i, j, self.puzzle[i][j])
+
                     if len(checkList) == 1:
                         self.puzzle[i][j] = checkList[0]
 
-                    #self.candidate[i][j] = checkList
-                #else:
-                    #self.candidate[i][j] = [self.puzzle[i][j]]
+                        self.rowCandidateRemove(i, self.puzzle[i][j])
+                        self.columnCandidateRemove(j, self.puzzle[i][j])
+                        self.areaCandidateRemove(i, j, self.puzzle[i][j])
 
-        self.candidateCheck()
+                    """候補のチェック"""
+                    self.checkCandidate(i, j)
 
     def candidateCheck(self):
         for i in range(9):
@@ -62,11 +67,6 @@ class SudokuPuzzle:
                     self.candidate[i][j] = checkList
                 else:
                     self.candidate[i][j] = [self.puzzle[i][j]]
-
-        for i in range(9):
-            for j in range(9):
-                self.checkCandidate(i, j)
-
 
     def checkNearLine(self, checkList ,column, row):
 
