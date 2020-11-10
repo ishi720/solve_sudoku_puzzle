@@ -175,4 +175,62 @@ class SudokuPuzzle:
                             if n in self.candidate[_row+i][_column+j]:
                                 self.candidate[_row+i][_column+j].remove(n)
 
+        work = []
+        for j in range(9):
+            if j == column:
+                continue
+            if self.puzzle[row][j] == 0:
+                work += self.candidate[row][j]
+
+        # チェックマスにしかない候補をセットする
+        for n in self.candidate[row][column]:
+            if n not in work:
+                self.puzzle[row][column] = n
+                self.candidate[row][column] = [n]
+
+                # 確定したら数値を横の候補から削除する
+                for i in range(9):
+                    if len(self.candidate[i][column]) != 1:
+                        if n in self.candidate[i][column]:
+                            self.candidate[i][column].remove(n)
+
+                # 確定したら数値を3x3のエリアの候補から削除する
+                _row = (row // 3) * 3
+                _column = (column // 3) * 3
+                for i in range(3):
+                    for j in range(3):
+                        if len(self.candidate[_row+i][_column+j]) != 1:
+                            if n in self.candidate[_row+i][_column+j]:
+                                self.candidate[_row+i][_column+j].remove(n)
+
+        work = []
+        _row = (row // 3) * 3
+        _column = (column // 3) * 3
+        for i in range(3):
+            for j in range(3):
+                if i == _row and j == _column:
+                    continue
+                if self.puzzle[_row+i][_column+j] == 0:
+                    work += self.candidate[_row+i][_column+j]
+
+        # チェックマスにしかない候補をセットする
+        for n in self.candidate[row][column]:
+            if n not in work:
+                self.puzzle[row][column] = n
+                self.candidate[row][column] = [n]
+
+                # 確定したら数値を横の候補から削除する
+                for j in range(9):
+                    if len(self.candidate[row][j]) != 1:
+                        if n in self.candidate[row][j]:
+                            self.candidate[row][j].remove(n)
+
+                # 確定したら数値を3x3のエリアの候補から削除する
+                _row = (row // 3) * 3
+                _column = (column // 3) * 3
+                for i in range(3):
+                    for j in range(3):
+                        if len(self.candidate[_row+i][_column+j]) != 1:
+                            if n in self.candidate[_row+i][_column+j]:
+                                self.candidate[_row+i][_column+j].remove(n)
 
