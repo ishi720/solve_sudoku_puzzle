@@ -43,9 +43,9 @@ class SudokuPuzzle:
                 #else:
                     #self.candidate[i][j] = [self.puzzle[i][j]]
 
-        self.candidatehhh()
+        self.candidateCheck()
 
-    def candidatehhh(self):
+    def candidateCheck(self):
         for i in range(9):
             for j in range(9):
                 checkList = [1,2,3,4,5,6,7,8,9]
@@ -160,20 +160,9 @@ class SudokuPuzzle:
                 self.puzzle[row][column] = n
                 self.candidate[row][column] = [n]
 
-                # 確定したら数値を横の候補から削除する
-                for j in range(9):
-                    if len(self.candidate[row][j]) != 1:
-                        if n in self.candidate[row][j]:
-                            self.candidate[row][j].remove(n)
-
-                # 確定したら数値を3x3のエリアの候補から削除する
-                _row = (row // 3) * 3
-                _column = (column // 3) * 3
-                for i in range(3):
-                    for j in range(3):
-                        if len(self.candidate[_row+i][_column+j]) != 1:
-                            if n in self.candidate[_row+i][_column+j]:
-                                self.candidate[_row+i][_column+j].remove(n)
+                # 確定したら関連するマスから候補を削除する
+                self.rowCandidateRemove(row, n)
+                self.areaCandidateRemove(row, column, n)
 
         work = []
         for j in range(9):
@@ -188,20 +177,9 @@ class SudokuPuzzle:
                 self.puzzle[row][column] = n
                 self.candidate[row][column] = [n]
 
-                # 確定したら数値を横の候補から削除する
-                for i in range(9):
-                    if len(self.candidate[i][column]) != 1:
-                        if n in self.candidate[i][column]:
-                            self.candidate[i][column].remove(n)
-
-                # 確定したら数値を3x3のエリアの候補から削除する
-                _row = (row // 3) * 3
-                _column = (column // 3) * 3
-                for i in range(3):
-                    for j in range(3):
-                        if len(self.candidate[_row+i][_column+j]) != 1:
-                            if n in self.candidate[_row+i][_column+j]:
-                                self.candidate[_row+i][_column+j].remove(n)
+                # 確定したら関連するマスから候補を削除する
+                self.columnCandidateRemove(column, n)
+                self.areaCandidateRemove(row, column, n)
 
         work = []
         _row = (row // 3) * 3
@@ -219,18 +197,28 @@ class SudokuPuzzle:
                 self.puzzle[row][column] = n
                 self.candidate[row][column] = [n]
 
-                # 確定したら数値を横の候補から削除する
-                for j in range(9):
-                    if len(self.candidate[row][j]) != 1:
-                        if n in self.candidate[row][j]:
-                            self.candidate[row][j].remove(n)
+                # 確定したら関連するマスから候補を削除する
+                self.columnCandidateRemove(column, n)
+                self.rowCandidateRemove(row, n)
 
-                # 確定したら数値を3x3のエリアの候補から削除する
-                _row = (row // 3) * 3
-                _column = (column // 3) * 3
-                for i in range(3):
-                    for j in range(3):
-                        if len(self.candidate[_row+i][_column+j]) != 1:
-                            if n in self.candidate[_row+i][_column+j]:
-                                self.candidate[_row+i][_column+j].remove(n)
 
+    def columnCandidateRemove(self, column, candidateNum):
+        for i in range(9):
+            if len(self.candidate[i][column]) != 1:
+                if candidateNum in self.candidate[i][column]:
+                    self.candidate[i][column].remove(candidateNum)
+
+    def rowCandidateRemove(self, row, candidateNum):
+        for j in range(9):
+            if len(self.candidate[row][j]) != 1:
+                if candidateNum in self.candidate[row][j]:
+                    self.candidate[row][j].remove(candidateNum)
+
+    def areaCandidateRemove(self, row, column, candidateNum):
+        _row = (row // 3) * 3
+        _column = (column // 3) * 3
+        for i in range(3):
+            for j in range(3):
+                if len(self.candidate[_row+i][_column+j]) != 1:
+                    if candidateNum in self.candidate[_row+i][_column+j]:
+                        self.candidate[_row+i][_column+j].remove(candidateNum)
