@@ -33,13 +33,6 @@ class SudokuPuzzle:
                     """3x3のチェック"""
                     checkList = self.checkArea(checkList, i, j)
 
-                    if self.checkNearLine(checkList, i, j):
-                        self.puzzle[i][j] = self.checkNearLine(checkList, i, j)
-
-                        self.rowCandidateRemove(i, self.puzzle[i][j])
-                        self.columnCandidateRemove(j, self.puzzle[i][j])
-                        self.areaCandidateRemove(i, j, self.puzzle[i][j])
-
                     if len(checkList) == 1:
                         self.puzzle[i][j] = checkList[0]
 
@@ -67,45 +60,6 @@ class SudokuPuzzle:
                     self.candidate[i][j] = checkList
                 else:
                     self.candidate[i][j] = [self.puzzle[i][j]]
-
-    def checkNearLine(self, checkList ,column, row):
-
-        nearColumnList = []
-        for i in range(3):
-            if column // 3 * 3 + i != column: 
-                nearColumnList.append(column // 3 * 3 + i)
-        nearColumn1,nearColumn2 = nearColumnList
-
-        nearRowList = []
-        for i in range(3):
-            if row // 3 * 3 + i != row: 
-                nearRowList.append(row // 3 * 3 + i)
-        nearRow1,nearRow2 = nearRowList
-
-        work = []
-        for x in range(9):
-            work.append(self.puzzle[x][nearRow1])
-        checkList =  set(checkList) & set(work)
-
-        work = []
-        for x in range(9):
-            work.append(self.puzzle[x][nearRow2])
-        checkList =  set(checkList) & set(work)
-
-        work = []
-        for x in range(9):
-            work.append(self.puzzle[nearColumn1][x])
-        checkList =  set(checkList) & set(work)
-
-        work = []
-        for x in range(9):
-            work.append(self.puzzle[nearColumn2][x])
-        checkList =  set(checkList) & set(work)
-
-        if len(checkList) == 1:
-            return list(checkList)[0]
-        else:
-            return False
 
     def checkColumn(self, checkList, column):
         """横のチェック"""
