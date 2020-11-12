@@ -1,9 +1,6 @@
 import math
 
 class SudokuPuzzle:
-    puzzle = []
-    candidate = []
-
     def __init__(self, puzzle):
         self.puzzle = puzzle
         self.candidate = [
@@ -18,6 +15,16 @@ class SudokuPuzzle:
             [0,0,0,0,0,0,0,0,0]
         ]
         self.candidateCheck()
+
+    def solveTheEnd(self):
+
+        while True:
+            percentage,fraction = self.progress()
+            self.solver()
+            percentage1,fraction2 = self.progress()
+
+            if percentage == percentage1:
+                break
 
     def solver(self):
         for i in range(9):

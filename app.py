@@ -74,13 +74,13 @@ def hello():
 def index():
     puzzle = json.loads(request.form['puzzle'])
     puzzleObj = SudokuPuzzle(puzzle)
-    puzzleObj.solver()
+    puzzleObj.solveTheEnd()
     percentage,fraction = puzzleObj.progress()
 
     return jsonify({
         'percentage': percentage,
         'fraction': fraction,
-        'afterPuzzle': puzzleObj.puzzle,
+        'afterPuzzle': puzzleObj.puzzle
     })
 
 if __name__ == "__main__":
