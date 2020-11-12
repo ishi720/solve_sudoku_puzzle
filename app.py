@@ -76,11 +76,13 @@ def index():
     puzzleObj = SudokuPuzzle(puzzle)
     puzzleObj.solveTheEnd()
     percentage,fraction = puzzleObj.progress()
+    checkCount = puzzleObj.checkCount
 
     return jsonify({
         'percentage': percentage,
         'fraction': fraction,
-        'afterPuzzle': puzzleObj.puzzle
+        'afterPuzzle': puzzleObj.puzzle,
+        'checkCount': checkCount
     })
 
 if __name__ == "__main__":

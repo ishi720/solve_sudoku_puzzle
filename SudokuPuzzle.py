@@ -14,16 +14,17 @@ class SudokuPuzzle:
             [0,0,0,0,0,0,0,0,0],
             [0,0,0,0,0,0,0,0,0]
         ]
+        self.checkCount = 0
         self.candidateCheck()
 
     def solveTheEnd(self):
 
         while True:
-            percentage,fraction = self.progress()
+            percentage1,fraction1 = self.progress()
             self.solver()
-            percentage1,fraction2 = self.progress()
+            percentage2,fraction2 = self.progress()
 
-            if percentage == percentage1:
+            if percentage1 == percentage2:
                 break
 
     def solver(self):
@@ -31,6 +32,7 @@ class SudokuPuzzle:
             for j in range(9):
                 checkList = [1,2,3,4,5,6,7,8,9]
                 if self.puzzle[i][j] == 0:
+                    self.checkCount += 1
                     """横のチェック"""
                     checkList = self.checkColumn(checkList, i)
 
