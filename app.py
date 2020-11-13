@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 import json
-from SudokuPuzzle import SudokuPuzzle
+from module import SudokuPuzzle
 
 app = Flask(__name__)
 
@@ -59,7 +59,7 @@ def hello():
         [0,0,1,0,9,0,2,0,0]
     ]
 
-    puzzleObj = SudokuPuzzle(puzzle)
+    puzzleObj = SudokuPuzzle.SudokuPuzzle(puzzle)
     percentage,fraction = puzzleObj.progress()
 
     return render_template(
@@ -73,7 +73,7 @@ def hello():
 @app.route('/api/', methods=['POST'])
 def index():
     puzzle = json.loads(request.form['puzzle'])
-    puzzleObj = SudokuPuzzle(puzzle)
+    puzzleObj = SudokuPuzzle.SudokuPuzzle(puzzle)
     puzzleObj.solveTheEnd()
     percentage,fraction = puzzleObj.progress()
     checkCount = puzzleObj.checkCount
