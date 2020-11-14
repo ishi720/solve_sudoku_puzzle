@@ -1,11 +1,9 @@
 from unittest import TestCase
-#import os
-import sys
-sys.path.append('./module')
-#sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from SudokuPuzzle import SudokuPuzzle
+import sys, os
+sys.path.append(os.path.join(os.path.dirname(__file__), '../module'))
+from module.SudokuPuzzle import SudokuPuzzle
 
-class TestSudokuPuzzle(TestCase):
+class Test(TestCase):
 
     def test_puzzle1(self):
         """初級問題のテスト"""
