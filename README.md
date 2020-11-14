@@ -1,6 +1,6 @@
 ### Badge
 
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/89a117c5dccb4e3c80a990501d7d60ac)](https://www.codacy.com/gh/ishi720/solve_sudoku_puzzle/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ishi720/solve_sudoku_puzzle&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/89a117c5dccb4e3c80a990501d7d60ac)](https://www.codacy.com/gh/ishi720/solve_sudoku_puzzle/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ishi720/solve_sudoku_puzzle&amp;utm_campaign=Badge_Grade) [![Build Status](https://travis-ci.org/ishi720/solve_sudoku_puzzle.svg?branch=master)](https://travis-ci.org/ishi720/solve_sudoku_puzzle)
 
 ### Heroku
 
