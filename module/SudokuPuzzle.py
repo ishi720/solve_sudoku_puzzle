@@ -70,28 +70,28 @@ class SudokuPuzzle:
                 else:
                     self.candidate[i][j] = [self.puzzle[i][j]]
 
-    def checkColumn(self, checkList, column):
+    def checkColumn(self, checkList, row):
         """横のチェック"""
-        for row in range(9):
-            if self.puzzle[column][row] in checkList:
-                checkList.remove(self.puzzle[column][row])
-        return checkList
-
-    def checkRow(self, checkList, row):
-        """縦のチェック"""
         for column in range(9):
-            if self.puzzle[column][row] in checkList:
-                checkList.remove(self.puzzle[column][row])
+            if self.puzzle[row][column] in checkList:
+                checkList.remove(self.puzzle[row][column])
         return checkList
 
-    def checkArea(self, checkList, column, row):
+    def checkRow(self, checkList, column):
+        """縦のチェック"""
+        for row in range(9):
+            if self.puzzle[row][column] in checkList:
+                checkList.remove(self.puzzle[row][column])
+        return checkList
+
+    def checkArea(self, checkList, row, column):
         """3x3のエリアのチェック"""
-        _column = (column // 3) * 3
         _row = (row // 3) * 3
+        _column = (column // 3) * 3
         for i in range(3):
             for j in range(3):
-                if self.puzzle[_column+i][_row+j] in checkList:
-                    checkList.remove(self.puzzle[_column+i][_row+j])
+                if self.puzzle[_row+i][_column+j] in checkList:
+                    checkList.remove(self.puzzle[_row+i][_column+j])
         return checkList
 
     def progress(self):
